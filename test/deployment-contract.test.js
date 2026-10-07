@@ -29,3 +29,12 @@ test('llmdevops manifest declares the bounded stateless HTTP v1 contract', async
   assert.match(manifest, /^  - RELEASE_VERSION$/m);
   assert.match(manifest, /SOURCE PLACEHOLDER/i);
 });
+
+test('CI publishes a commit-addressed image without a mutable latest tag', async () => {
+  const workflow = await readFile(new URL('../.github/workflows/publish-image.yml', import.meta.url), 'utf8');
+
+  assert.match(workflow, /packages: write/);
+  assert.match(workflow, /npm test/);
+  assert.match(workflow, /ghcr\.io\/innokentyb\/llmdevops-demo-app:sha-\$\{\{ github\.sha \}\}/);
+  assert.doesNotMatch(workflow, /:latest/);
+});
