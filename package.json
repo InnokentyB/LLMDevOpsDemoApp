@@ -1,0 +1,14 @@
+{
+  "name": "llmdevops-demo-app",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Minimal stateless HTTP application for the LLMDevOps deployment demo.",
+  "engines": {
+    "node": ">=22 <25"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test"
+  }
+}
