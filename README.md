@@ -1,9 +1,9 @@
-# LLMDevOps Demo App
+# ВайбХостинг Demo App
 
-A deliberately small stateless HTTP application for demonstrating the
-LLMDevOps universal Docker deployment flow. It uses only built-in Node.js APIs:
-there are no package dependencies, secrets, databases, volumes, or external
-services.
+A deliberately small stateless HTTP application that serves the ВайбХостинг
+early-access landing page and demonstrates the universal Docker deployment
+flow. It uses only built-in Node.js APIs: there are no package dependencies,
+secrets, databases, volumes, or external services.
 
 ## Run locally
 

@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-07T18:00:00+01:00",
+  "title": "Design System: ВайбХостинг",
+  "extensions": {
+    "colorMeta": {
+      "proof-paper": {"role": "neutral", "displayName": "Proof Paper", "canonical": "#f3ead6", "tonalRamp": ["#28261f", "#474339", "#696356", "#8c8575", "#afa895", "#cec6b0", "#e6ddc8", "#f8f2e7"]},
+      "registration-ink": {"role": "neutral", "displayName": "Registration Ink", "canonical": "#171717", "tonalRamp": ["#171717", "#303030", "#4b4b4b", "#686868", "#898989", "#acacac", "#d0d0d0", "#f2f2f2"]},
+      "release-red": {"role": "primary", "displayName": "Release Red", "canonical": "#ef4d36", "tonalRamp": ["#401008", "#6b1c11", "#98291b", "#c23727", "#ef4d36", "#f47c68", "#f8aa9a", "#fddbd2"]},
+      "deploy-blue": {"role": "primary", "displayName": "Deploy Blue", "canonical": "#2355f4", "tonalRamp": ["#07184d", "#0c287d", "#1239ad", "#1949dc", "#2355f4", "#6584f7", "#9db0fa", "#dbe3fe"]},
+      "overlap-violet": {"role": "secondary", "displayName": "Overlap Violet", "canonical": "#382c65", "tonalRamp": ["#161125", "#241c41", "#382c65", "#544584", "#7566a4", "#998dc2", "#c2b9df", "#ece8f6"]}
+    },
+    "typographyMeta": {
+      "display": {"displayName": "Display", "purpose": "Первый экран и крупные заголовки разделов."},
+      "body": {"displayName": "Body", "purpose": "Быстро читаемые продуктовые объяснения."},
+      "label": {"displayName": "Proof Label", "purpose": "Состояния, роли и регистрационные отметки."}
+    },
+    "shadows": [],
+    "motion": [
+      {"name": "press-lift", "value": "transform 180ms ease-out, background 180ms ease-out, color 180ms ease-out", "purpose": "Единственный интерактивный подъём основной кнопки."}
+    ],
+    "breakpoints": [
+      {"name": "stack", "value": "820px"},
+      {"name": "phone", "value": "520px"}
+    ],
+    "components": [
+      {
+        "name": "Primary Action",
+        "kind": "button",
+        "refersTo": "button-primary",
+        "description": "Главное действие на бумажной поверхности.",
+        "html": "<a class=\"ds-action\" href=\"#\">Получить ранний доступ</a>",
+        "css": ".ds-action { display:inline-flex; align-items:center; min-height:52px; padding:0 20px; border:2px solid #171717; background:#171717; color:#f3ead6; font:800 14px/1.2 Unbounded,sans-serif; text-decoration:none; transition:transform .18s ease-out,background .18s ease-out; } .ds-action:hover { transform:translateY(-3px); background:#2355f4; } .ds-action:focus-visible { outline:4px solid #2355f4; outline-offset:4px; }"
+      },
+      {
+        "name": "Proof Navigation",
+        "kind": "nav",
+        "description": "Тонкая текстовая навигация с одним статусным сигналом.",
+        "html": "<nav class=\"ds-nav\"><strong>ВайбХостинг</strong><span>Как работает</span><span class=\"ds-status\">ранний доступ</span></nav>",
+        "css": ".ds-nav { display:flex; gap:24px; align-items:center; padding:20px; border-bottom:1px solid #171717; background:#f3ead6; color:#171717; font:700 14px/1.2 Avenir,sans-serif; } .ds-nav strong { margin-right:auto; font-family:Unbounded,sans-serif; } .ds-status::before { content:''; display:inline-block; width:8px; height:8px; margin-right:8px; border-radius:50%; background:#258a4b; }"
+      },
+      {
+        "name": "Exact Confirmation",
+        "kind": "custom",
+        "description": "Неизменяемая строка, которую пользователь подтверждает перед деплоем.",
+        "html": "<code class=\"ds-confirm\">DEPLOY 40d89f3</code>",
+        "css": ".ds-confirm { display:inline-block; padding:8px 10px; background:#ffb9a9; color:#171717; font:800 14px/1.2 ui-monospace,monospace; } .ds-confirm:focus-visible { outline:4px solid #2355f4; outline-offset:4px; }"
+      }
+    ],
+    "narrative": {
+      "northStar": "Пробный оттиск",
+      "overview": "ВайбХостинг выглядит как типографский proof sheet: релиз сначала проявляется крупно, проходит проверку и только потом получает право стать публичным. Выразительность подчинена состояниям продукта.",
+      "keyCharacteristics": ["Плоский печатный материал", "Крупная дисплейная кириллица", "Две смысловые краски", "Служебные proof marks", "Адаптивное наложение без горизонтального скролла"],
+      "rules": [
+        {"name": "The Two-Ink Rule", "body": "Красный и синий несут разные слои смысла; фиолетовый появляется только при их реальном пересечении.", "section": "colors"},
+        {"name": "The Proof Hierarchy Rule", "body": "Один огромный тезис, один читаемый слой объяснения и один служебный слой.", "section": "typography"},
+        {"name": "The Printed-Flat Rule", "body": "Новое состояние проявляется краской, правилом или перекрытием, а не карточной тенью.", "section": "elevation"}
+      ],
+      "dos": ["Do превращать состояние релиза в видимый печатный слой.", "Do сохранять большие спокойные поля вокруг плотной технической информации.", "Do проверять отсутствие горизонтального скролла на 390px."],
+      "donts": ["Don't заменять листовую композицию сеткой одинаковых карточек.", "Don't добавлять стекло, мягкие тени, градиентный текст или скруглённый SaaS-хром.", "Don't применять фиолетовый отдельно от пересечения красного и синего."]
+    }
+  }
+}
