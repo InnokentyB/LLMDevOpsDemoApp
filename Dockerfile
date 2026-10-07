@@ -6,6 +6,7 @@ WORKDIR /app
 
 COPY --chown=node:node package.json server.js ./
 COPY --chown=node:node src ./src
+COPY --chown=node:node assets ./assets
 
 USER node
 EXPOSE 8080
