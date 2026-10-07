@@ -1,11 +1,8 @@
-# SOURCE PLACEHOLDER: before publication, replace the repository URL and the
-# all-zero commit with the real public repository and exact immutable commit.
 version: 1
 kind: stateless-http
 source:
   repository: https://github.com/InnokentyB/LLMDevopsDemoApp
   ref: main
-  commit: 0000000000000000000000000000000000000000
 build:
   dockerfile: Dockerfile
 http:

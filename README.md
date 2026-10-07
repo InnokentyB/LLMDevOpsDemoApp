@@ -36,7 +36,6 @@ The image runs as the unprivileged `node` user.
 `Dockerfile`, one HTTP port, one health path, environment variable names only,
 and bounded resources.
 
-The checked-in source block is intentionally a placeholder while this repository
-is local. **Do not deploy or publish from the manifest until the repository URL
-and all-zero commit are replaced with the real public repository and exact
-immutable Git commit.** No GitHub repository is created by this project setup.
+The checked-in manifest names the repository and branch. LLMDevOps resolves and
+records the exact immutable Git commit in the deployment profile and plan; a
+manifest cannot truthfully contain the SHA of the commit that contains itself.

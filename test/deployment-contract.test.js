@@ -27,7 +27,7 @@ test('llmdevops manifest declares the bounded stateless HTTP v1 contract', async
   assert.match(manifest, /^  port: 8080$/m);
   assert.match(manifest, /^  healthPath: \/health$/m);
   assert.match(manifest, /^  - RELEASE_VERSION$/m);
-  assert.match(manifest, /SOURCE PLACEHOLDER/i);
+  assert.doesNotMatch(manifest, /^  commit:/m);
 });
 
 test('CI publishes a commit-addressed image without a mutable latest tag', async () => {
