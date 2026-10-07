@@ -14,6 +14,7 @@ test('the container listens on 8080 and drops root privileges', async () => {
 
   assert.match(dockerfile, /^EXPOSE 8080$/m);
   assert.match(dockerfile, /^USER node$/m);
+  assert.match(dockerfile, /^FROM node:24-alpine@sha256:[a-f0-9]{64}$/m);
   assert.doesNotMatch(dockerfile, /npm (?:ci|install)/);
 });
 
