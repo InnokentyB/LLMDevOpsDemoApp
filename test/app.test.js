@@ -47,6 +47,7 @@ test('landing describes the bounded v1 contract without invented proof', async (
   assert.match(response.body, /откат/i);
   assert.match(response.body, /готовый публичный образ в GHCR/i);
   assert.match(response.body, /одноразовое приглашение/i);
+  assert.match(response.body, /href="\/downloads\/vibehosting-mcp\.mjs"/);
   assert.doesNotMatch(response.body, /Собрать точную Git-ревизию/);
   assert.doesNotMatch(response.body, /тысяч[аи] (?:клиентов|пользователей)/i);
   assert.doesNotMatch(response.body, /отзыв/i);
@@ -76,6 +77,16 @@ test('landing display font is served from the application itself', async () => {
 
   assert.equal(response.status, 200);
   assert.equal(response.contentType, 'font/ttf');
+  assert.ok(response.body.length > 1000);
+});
+
+test('public MCP bridge download is self-contained code without local operator paths or embedded credentials', async () => {
+  const response = await request(createDemoServer({}), '/downloads/vibehosting-mcp.mjs');
+  assert.equal(response.status, 200);
+  assert.equal(response.contentType, 'application/javascript; charset=utf-8');
+  assert.match(response.body, /createLocalMcpBridge/);
+  assert.match(response.body, /Model Context Protocol/);
+  assert.doesNotMatch(response.body, /\/Users\/|Bearer vh_[A-Za-z0-9_-]{43}|vh_[A-Za-z0-9_-]{43}|railway-alt|generic_docker_deployer/);
   assert.ok(response.body.length > 1000);
 });
 

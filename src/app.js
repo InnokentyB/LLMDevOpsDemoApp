@@ -5,6 +5,7 @@ const DEFAULT_PORT = 8080;
 const DEFAULT_RELEASE_VERSION = 'local';
 const SAFE_RELEASE_VERSION = /^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$/;
 const DISPLAY_FONT = readFileSync(new URL('../assets/Unbounded-Variable.ttf', import.meta.url));
+const MCP_BRIDGE = readFileSync(new URL('../assets/downloads/vibehosting-mcp.mjs', import.meta.url));
 
 export function readReleaseVersion(env = process.env) {
   const candidate = env.RELEASE_VERSION?.trim();
@@ -42,6 +43,11 @@ export function createDemoServer(env = process.env) {
 
     if (request.method === 'GET' && pathname === '/assets/unbounded.ttf') {
       send(response, 200, 'font/ttf', DISPLAY_FONT);
+      return;
+    }
+
+    if (request.method === 'GET' && pathname === '/downloads/vibehosting-mcp.mjs') {
+      send(response, 200, 'application/javascript; charset=utf-8', MCP_BRIDGE);
       return;
     }
 
@@ -239,6 +245,7 @@ function renderHomePage(releaseVersion) {
             <h2 id="early-title">Получить ранний доступ.</h2>
             <p>Мы открываем ВайбХостинг небольшими группами и сначала проверяем его на реальных проектах вместе с авторами. Если вы получили эту ссылку на воркшопе — скажите ведущему, что хотите развернуть свой проект.</p>
             <p>Для первой попытки понадобится одноразовое приглашение, публичный Git-репозиторий, готовый публичный образ в GHCR и health endpoint. Регистрация — через MCP, без сайта. Пилот: один проект, 256 МБ памяти и 0,5 CPU на аккаунт; доступ на семь дней.</p>
+            <p><a href="/downloads/vibehosting-mcp.mjs" download>Скачать MCP-клиент</a> · Нужен Node.js 24. <a href="https://github.com/InnokentyB/LLMDevOpsDemoApp#подключение-mcp-для-участников">Инструкция подключения</a></p>
           </div>
           <div class="early-side">
             <span class="release">release ${releaseVersion}<br>вайбхостинг.рф</span>
