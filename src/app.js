@@ -208,8 +208,8 @@ function renderHomePage(releaseVersion) {
           <div class="conversation" aria-label="Пример публикации через MCP">
             <div class="turn"><span class="speaker">Вы</span><p>Опубликуй этот проект.</p></div>
             <div class="turn"><span class="speaker">ВайбХостинг</span><p>Нашёл stateless HTTP-приложение: корневой <code>Dockerfile</code>, порт 8080, <code>/health</code>. Подготовил изолированный релиз.</p></div>
-            <div class="turn"><span class="speaker">План</span><p>Собрать точную Git-ревизию → запустить новый контейнер → проверить health check → открыть HTTPS → сохранить предыдущую версию для отката.</p></div>
-            <div class="turn"><span class="speaker">Подтверждение</span><p>Выполнить только этот план.<br><span class="confirm">DEPLOY 40d89f3</span></p></div>
+            <div class="turn"><span class="speaker">План</span><p>Загрузить готовый образ по неизменяемому digest → запустить контейнер → проверить health check и HTTPS → сохранить предыдущую версию для отката.</p></div>
+            <div class="turn"><span class="speaker">Подтверждение</span><p>Выполнить только этот план.<br><span class="confirm">DEPLOY plan_0123456789abcdef</span></p></div>
             <div class="turn"><span class="speaker">Результат</span><p>Готово. Приложение отвечает по публичному адресу, проверка прошла.</p></div>
           </div>
         </section>
@@ -217,7 +217,7 @@ function renderHomePage(releaseVersion) {
         <section class="path" aria-labelledby="path-title">
           <h2 id="path-title">Три шага вместо новой профессии.</h2>
           <div class="steps">
-            <article class="step"><strong>INPUT</strong><h3>Подключите проект</h3><p>ВайбХостинг читает манифест и Git-ревизию. Никаких произвольных команд из репозитория.</p></article>
+            <article class="step"><strong>INPUT</strong><h3>Подключите проект</h3><p>Передайте манифест и готовый публичный образ в GHCR. Сборку агент готовит отдельно: сервис пока не собирает код из Git.</p></article>
             <article class="step"><strong>CONFIRM</strong><h3>Увидьте точный план</h3><p>Что будет запущено, как проверится новая версия и что останется для отката — до первого изменения.</p></article>
             <article class="step"><strong>LIVE</strong><h3>Получите адрес</h3><p>Успехом считается не завершившийся скрипт, а живой HTTPS-адрес с прошедшим health check.</p></article>
           </div>
@@ -230,7 +230,7 @@ function renderHomePage(releaseVersion) {
           </div>
           <div class="later">
             <h2>Что пока оставляем людям.</h2>
-            <ul><li>Базы и миграции</li><li>Persistent volumes</li><li>DNS и сертификаты</li><li>Секреты приложения</li><li>Необратимые операции</li></ul>
+            <ul><li>Базы и миграции</li><li>Persistent volumes</li><li>Собственные домены</li><li>Секреты приложения</li><li>Необратимые операции</li></ul>
           </div>
         </section>
 
@@ -238,7 +238,7 @@ function renderHomePage(releaseVersion) {
           <div class="early-main">
             <h2 id="early-title">Получить ранний доступ.</h2>
             <p>Мы открываем ВайбХостинг небольшими группами и сначала проверяем его на реальных проектах вместе с авторами. Если вы получили эту ссылку на воркшопе — скажите ведущему, что хотите развернуть свой проект.</p>
-            <p>Для первой попытки понадобится публичный Git-репозиторий, Dockerfile и health endpoint. Всё остальное разберём в диалоге с агентом.</p>
+            <p>Для первой попытки понадобится одноразовое приглашение, публичный Git-репозиторий, готовый публичный образ в GHCR и health endpoint. Регистрация — через MCP, без сайта. Пилот: один проект, 256 МБ памяти и 0,5 CPU на аккаунт; доступ на семь дней.</p>
           </div>
           <div class="early-side">
             <span class="release">release ${releaseVersion}<br>вайбхостинг.рф</span>

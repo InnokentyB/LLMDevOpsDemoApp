@@ -45,6 +45,9 @@ test('landing describes the bounded v1 contract without invented proof', async (
   assert.match(response.body, /Dockerfile/i);
   assert.match(response.body, /health check/i);
   assert.match(response.body, /откат/i);
+  assert.match(response.body, /готовый публичный образ в GHCR/i);
+  assert.match(response.body, /одноразовое приглашение/i);
+  assert.doesNotMatch(response.body, /Собрать точную Git-ревизию/);
   assert.doesNotMatch(response.body, /тысяч[аи] (?:клиентов|пользователей)/i);
   assert.doesNotMatch(response.body, /отзыв/i);
 });
