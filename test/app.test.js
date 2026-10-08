@@ -65,6 +65,14 @@ test('landing keeps a usable document outline and accessibility affordances', as
   assert.match(response.body, /:focus-visible/);
 });
 
+test('EA-001/006: early access ends in a labelled contact form, not another top anchor',async()=>{
+  const {body}=await request(createDemoServer({}),'/');
+  assert.match(body,/<form[^>]+id="early-access-form"/);
+  assert.match(body,/name="name"[^>]+required/);assert.match(body,/type="email"[^>]+required/);
+  assert.match(body,/type="submit"[^>]*>Отправить заявку/);
+  assert.match(body,/role="status"/);assert.doesNotMatch(body,/Я хочу попробовать ↑/);
+});
+
 test('GET /health returns a small healthy JSON response', async () => {
   const response = await request(createDemoServer({}), '/health');
 

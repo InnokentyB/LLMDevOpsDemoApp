@@ -6,6 +6,7 @@ const DEFAULT_RELEASE_VERSION = 'local';
 const SAFE_RELEASE_VERSION = /^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$/;
 const DISPLAY_FONT = readFileSync(new URL('../assets/Unbounded-Variable.ttf', import.meta.url));
 const MCP_BRIDGE = readFileSync(new URL('../assets/downloads/vibehosting-mcp.mjs', import.meta.url));
+const EARLY_ACCESS_CLIENT=readFileSync(new URL('./early-access-client.js',import.meta.url));
 
 export function readReleaseVersion(env = process.env) {
   const candidate = env.RELEASE_VERSION?.trim();
@@ -34,6 +35,9 @@ export function createDemoServer(env = process.env) {
     if (request.method === 'GET' && pathname === '/') {
       send(response, 200, 'text/html; charset=utf-8', renderHomePage(releaseVersion));
       return;
+    }
+    if(request.method==='GET' && pathname==='/assets/early-access.js'){
+      send(response,200,'application/javascript; charset=utf-8',EARLY_ACCESS_CLIENT);return;
     }
 
     if (request.method === 'GET' && pathname === '/health') {
@@ -108,7 +112,7 @@ function renderHomePage(releaseVersion) {
       .hero::before { content: ""; position: absolute; z-index: -2; inset: 0 0 auto auto; width: 44%; height: 68%; background-color: var(--red); background-image: radial-gradient(rgba(23,23,23,.3) 1px, transparent 1.5px); background-size: 8px 8px; clip-path: polygon(16% 0, 100% 0, 100% 100%, 0 78%); }
       .hero::after { content: ""; position: absolute; z-index: -1; width: 46%; aspect-ratio: 1.45; right: 5%; top: 28%; background: var(--blue); mix-blend-mode: multiply; transform: rotate(-7deg); }
       h1 { max-width: 1180px; margin: 0; font-size: clamp(60px, 9vw, 132px); line-height: .84; letter-spacing: -.04em; font-weight: 900; text-wrap: balance; }
-      h1 span { display: block; margin-left: clamp(0px, 8vw, 120px); color: var(--blue); mix-blend-mode: multiply; }
+      h1 span { display: table; margin-left: clamp(0px, 8vw, 120px); padding: .08em .08em .16em; color: var(--blue); background: var(--paper); }
       .hero-copy { position: relative; z-index: 2; width: min(640px, 70%); margin: 74px 0 0 clamp(0px, 25vw, 380px); padding: 26px 28px 30px; background: var(--paper); border-top: 3px solid var(--ink); border-bottom: 1px solid var(--ink); }
       .hero-copy p { margin: 0 0 26px; font-size: clamp(20px, 2.3vw, 32px); line-height: 1.22; letter-spacing: -.02em; }
       .action { display: inline-flex; align-items: center; min-height: 52px; padding: 0 20px; border: 2px solid var(--ink); background: var(--ink); color: var(--paper); text-decoration: none; font-weight: 850; transition: transform .18s ease-out, background .18s ease-out, color .18s ease-out; }
@@ -152,6 +156,21 @@ function renderHomePage(releaseVersion) {
       .early-main p { max-width: 56ch; color: var(--muted); font-size: 19px; line-height: 1.55; }
       .early-side { display: flex; flex-direction: column; justify-content: space-between; padding: 40px var(--space); border-left: 1px solid var(--ink); background-color: rgba(239,77,54,.08); background-image: radial-gradient(rgba(23,23,23,.32) 1px, transparent 1.5px); background-size: 10px 10px; }
       .early-side .action { align-self: flex-start; font-size: 18px; }
+      .early-side { background-image: none; }
+      .request-form { display: grid; gap: 20px; margin-top: 24px; }
+      .request-form[hidden] { display: none; }
+      .request-form label { display: grid; gap: 8px; font-weight: 700; }
+      .request-form input:not([type="checkbox"]), .request-form textarea { width: 100%; border: 1px solid var(--ink); border-radius: 0; padding: 14px; background: var(--paper); color: var(--ink); font: inherit; font-size: 18px; caret-color: var(--blue); }
+      .request-form textarea { min-height: 120px; resize: vertical; }
+      .request-form input:focus-visible, .request-form textarea:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+      .request-form .consent { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; font-weight: 500; line-height: 1.45; }
+      .consent input { width: 20px; height: 20px; flex: 0 0 auto; accent-color: var(--blue); }
+      .request-form button { cursor: pointer; font-size: 15px; justify-content: center; }
+      .request-form button:disabled { opacity: .65; cursor: wait; transform: none; }
+      .honeypot { display: none !important; }
+      .request-status { font-size: 18px; line-height: 1.5; margin: 18px 0 0; }
+      .request-status[data-state="error"] { color: #8b2418; }
+      .request-status[data-state="success"] { border-top: 2px solid var(--ink); padding-top: 20px; }
       .release { font: 700 12px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; text-transform: uppercase; letter-spacing: .06em; }
       footer { display: flex; justify-content: space-between; gap: 28px; padding: 24px var(--space); border-top: 1px solid var(--ink); font-size: 13px; }
       @media (max-width: 820px) {
@@ -243,18 +262,28 @@ function renderHomePage(releaseVersion) {
         <section class="early" id="early-access" aria-labelledby="early-title">
           <div class="early-main">
             <h2 id="early-title">Получить ранний доступ.</h2>
-            <p>Мы открываем ВайбХостинг небольшими группами и сначала проверяем его на реальных проектах вместе с авторами. Если вы получили эту ссылку на воркшопе — скажите ведущему, что хотите развернуть свой проект.</p>
+            <p>Оставьте заявку — напишем вам и обсудим, как развернуть ваш проект. Открываем доступ небольшими группами и сначала проверяем сервис вместе с авторами приложений.</p>
             <p>Для первой попытки понадобится одноразовое приглашение, публичный Git-репозиторий, готовый публичный образ в GHCR и health endpoint. Регистрация — через MCP, без сайта. Пилот: один проект, 256 МБ памяти и 0,5 CPU на аккаунт; доступ на семь дней.</p>
             <p><a href="/downloads/vibehosting-mcp.mjs" download>Скачать MCP-клиент</a> · Нужен Node.js 24. <a href="https://github.com/InnokentyB/LLMDevOpsDemoApp#подключение-mcp-для-участников">Инструкция подключения</a></p>
           </div>
           <div class="early-side">
             <span class="release">release ${releaseVersion}<br>вайбхостинг.рф</span>
-            <a class="action" href="#top">Я хочу попробовать ↑</a>
+            <form id="early-access-form" class="request-form">
+              <label for="request-name">Как вас зовут<input id="request-name" name="name" autocomplete="name" maxlength="120" required></label>
+              <label for="request-email">Email для ответа<input id="request-email" name="email" type="email" autocomplete="email" maxlength="254" required></label>
+              <label for="request-message">Что хотите развернуть? <small>Необязательно. Не указывайте пароли и ключи.</small><textarea id="request-message" name="message" maxlength="2000"></textarea></label>
+              <label class="honeypot" aria-hidden="true">Ваш сайт<input name="website" tabindex="-1" autocomplete="off"></label>
+              <label class="consent"><input name="consent" type="checkbox" required>Разрешаю передать имя, email и описание проекта в CRM команды ВайбХостинга для ответа по этой заявке. Без подписки на рассылку.</label>
+              <button class="action" type="submit">Отправить заявку</button>
+            </form>
+            <p id="request-status" class="request-status" role="status" aria-live="polite" tabindex="-1"></p>
+            <noscript>Для отправки заявки включите JavaScript в браузере.</noscript>
           </div>
         </section>
       </main>
       <footer><span>ВайбХостинг — MCP-native публикация приложений.</span><span>Написал. Подтвердил. Опубликовал.</span></footer>
     </div>
+    <script src="/assets/early-access.js" defer></script>
   </body>
 </html>`;
 }
