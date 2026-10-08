@@ -232,11 +232,11 @@ function renderHomePage(releaseVersion) {
         <section class="boundary" id="scope" aria-label="Границы первой версии">
           <div>
             <h2>Что уже входит.</h2>
-            <ul><li>Stateless HTTP</li><li>Корневой Dockerfile</li><li>Один публичный порт</li><li>Health check</li><li>Проверяемый откат</li></ul>
+            <ul><li>Stateless HTTP</li><li>Готовый образ по digest</li><li>Один публичный порт</li><li>Health check</li><li>Регистрация через MCP</li></ul>
           </div>
           <div class="later">
             <h2>Что пока оставляем людям.</h2>
-            <ul><li>Базы и миграции</li><li>Persistent volumes</li><li>Собственные домены</li><li>Секреты приложения</li><li>Необратимые операции</li></ul>
+            <ul><li>Базы и миграции</li><li>Persistent volumes</li><li>Собственные домены</li><li>Секреты приложения</li><li>Автооткат временно недоступен: обновляем раннер</li></ul>
           </div>
         </section>
 
